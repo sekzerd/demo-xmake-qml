@@ -1,5 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import QtQuick.Window 2.12
+
+import "/layout/TopBar.qml" as TopBar
 
 ApplicationWindow {
     visible: true
@@ -10,39 +13,21 @@ ApplicationWindow {
     id: window
 
     // Add this MouseArea as the FIRST child
-    MouseArea {
-        id: dragRegion
-        height: 30
-        anchors {
+    TopBar.MouseArea {
+        parentWindow: window
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-
-        Rectangle {
-            width:parent.width
-            height:parent.height
-            color: "red"
-        }
-
-        property var lastPos
-        onPressed: lastPos = Qt.point(mouseX, mouseY)
-        onPositionChanged: {
-            if (pressed && window.x && window.y)
-            {
-                window.x = window.x + mouseX - lastPos.x
-                window.y = window.y + mouseY - lastPos.y
-            }
-        }
     }
 
-    ScrollView {
-        anchors {
-            top: dragRegion.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
-    }
+    // ScrollView {
+    //     anchors {
+    //         top: topBarInstance.dragRegionHeight
+
+    //         left: parent.left
+    //         right: parent.right
+    //         bottom: parent.bottom
+    //     }
+    // }
 }
